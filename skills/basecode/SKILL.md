@@ -1,3 +1,8 @@
+---
+name: basecode
+description: Apply BaseCode practices to improve the readability of code — naming, dead code, nested code, comments, and more.
+---
+
 # BaseCode Review
 
 Apply the BaseCode practices in order to improve the readability of the code under review. Work through each practice as a discrete pass. The goal is not shorter code or personal style — it is **readability**: making the code easier for the next human to read.

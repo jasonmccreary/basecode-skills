@@ -4,20 +4,19 @@ description: Apply BaseCode practices to improve the readability of code — nam
 ---
 
 # BaseCode Review
-
 Apply the BaseCode practices in order to improve the readability of the code under review. Work through each practice as a discrete pass. The goal is not shorter code or personal style — it is **readability**: making the code easier for the next human to read.
 
-## 1. Formatting
 
+## 1. Formatting
 Apply the standard formatter for the language and move on. Do not debate style.
 
 - Run the language's canonical formatter (Prettier, gofmt, Black, php-cs-fixer, etc.)
 - Ensure indentation, brace placement, and spacing are consistent throughout
+- Do not perform formatting that the tool does not automate
 - Goal: "visual honesty" — the visual structure should match the logical structure
-- Do not spend time on formatting that a tool can automate
+
 
 ## 2. Dead Code
-
 Remove all code that is not executed or no longer serves a purpose. Dead code creates noise, signals neglect, and misleads readers.
 
 **Commented-out code** — delete it. It exists in version control; if it's needed again, revert.
@@ -32,8 +31,8 @@ Remove all code that is not executed or no longer serves a purpose. Dead code cr
 
 **Abandoned code** — identify conditional paths gated on config values, feature flags, or preferences that are permanently off or no longer exist, and remove the entire dead branch.
 
-## 3. Nested Code
 
+## 3. Nested Code
 Reduce nesting to bring the primary action of a function to the top level. Each nesting level adds mental overhead for the reader.
 
 **Empty blocks** — remove empty `if` or `else` blocks entirely. Invert the condition if needed.
@@ -67,8 +66,8 @@ $this->items[] = $item;
 
 **Loops** — prefer higher-order functions (`filter`, `map`, `reduce`) over manual loops when the intent is accumulation or transformation.
 
-## 4. Using Objects
 
+## 4. Using Objects
 Replace informal data structures with objects when primitives make the code harder to maintain or read.
 
 **Formalize arrays/dictionaries** — when an associative array is passed around with a fixed set of known keys, replace it with a class that declares those properties explicitly.
@@ -79,8 +78,8 @@ Replace informal data structures with objects when primitives make the code hard
 
 Only introduce objects when they reduce complexity. If primitives keep the code clear, leave them.
 
-## 5. Big Blocks
 
+## 5. Big Blocks
 When a function or method is too long to read at a glance, apply this three-step process:
 
 **Step 1 — Recognize the level.** What is the context of this code? (controller, model, service, utility?) What does a reader expect to find here? Anything above or below that expectation is noise.
@@ -93,11 +92,11 @@ When a function or method is too long to read at a glance, apply this three-step
 
 Remove temporary comments once the refactor communicates the same intent through code. Keep a comment only if it survived the challenge in step 3.
 
-## 6. Naming
 
+## 6. Naming
 Names carry the most human signal in code. Apply these rules in order.
 
-**Avoid abbreviations** — use complete words. `$user`, not `$u`. `$destination`, not `$dst`. No single-letter names except the conventional `$i`, `$j` in `for` loops.
+**Avoid abbreviations** — use complete words. `$user`, not `$u`. `$destination`, not `$dst`. No single-letter names except the conventional `$i`, `$j`, `$x`, `$y` in `for` loops.
 
 **Follow conventions** — adopt the naming conventions of the language (e.g., `$i` for loop index, interface prefix `I` in .NET, camelCase vs snake_case). Do not invent new conventions when a standard exists.
 
@@ -109,8 +108,8 @@ Names carry the most human signal in code. Apply these rules in order.
 
 **Allow time** — do not force a name on the first pass. Use a long, descriptive temporary name (even a full phrase) if needed. The right name often emerges after more of the code is written and the domain vocabulary becomes clearer.
 
-## 7. Removing Comments
 
+## 7. Removing Comments
 Every inline comment is a cost to the reader. Remove comments that do not earn their place.
 
 **Remove what-comments** — any comment that only restates what the next line of code does should be deleted. If the code cannot explain itself, improve the code (rename, extract a method, restructure) rather than add a comment.
@@ -123,8 +122,8 @@ Every inline comment is a cost to the reader. Remove comments that do not earn t
 
 **Apply proximity** — move a variable declaration close to where it is first used so the reader does not need a comment to maintain context.
 
-## 8. Reasonable Returns
 
+## 8. Reasonable Returns
 Avoid returning values that force the caller to write extra handling code. `null` is the most common offender.
 
 **Return empty primitives instead of null** — when a function returns a collection, return `[]` not `null`. When it returns a number, return `0`. When it returns a string, return `""`. Match the return type to the primary action of the function. Fix the lowest-level functions first; this prevents null-handling from propagating upward.
@@ -133,8 +132,8 @@ Avoid returning values that force the caller to write extra handling code. `null
 
 **Use null objects** — when a function must return an object but has nothing to return, create a null object that implements the same interface with safe empty-value behavior. Return the null object instead of `null`, eliminating the caller's need for a null check.
 
-## 9. Rule of Three
 
+## 9. Rule of Three
 Do not abstract duplication immediately. Premature abstraction is more harmful than duplication.
 
 - **First occurrence** — write it. No abstraction yet.
@@ -145,8 +144,8 @@ The principle is **Defer Until Necessary (DUN)**. Duplication is far cheaper tha
 
 Do not reset this counter when the code changes. If a pattern appears only twice, leave it.
 
-## 10. Symmetry
 
+## 10. Symmetry
 Apply symmetry last. Once all other practices have been applied, look at the code as a whole and ask: does the same idea appear the same way everywhere?
 
 **Syntactic symmetry** — consistent formatting and structure throughout. Curly braces, operator choice (`&&` vs `and`), declaration placement — pick one style and apply it uniformly.
@@ -160,7 +159,6 @@ Symmetry is a feedback loop: as you improve one part, asymmetries elsewhere beco
 ---
 
 ## Order of application
-
 Apply the practices in this order — each pass sets up the next:
 
 1. Formatting — establish visual honesty

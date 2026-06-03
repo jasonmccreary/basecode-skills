@@ -27,6 +27,28 @@ You may also install via [Skills](https://www.skills.sh/) by running:
 npx skills add jasonmccreary/basecode-skills
 ```
 
+### OpenAI Codex
+
+OpenAI Codex can use the same `SKILL.md` files in this repository. You do not need a separate Codex-specific copy of the skills.
+
+After cloning or adding this repository to your project, add a short note to your project's `AGENTS.md` file telling Codex when to read the existing skills:
+
+```md
+# BaseCode
+
+When asked to apply BaseCode practices, first read the relevant skills from `basecode-skills/skills/`:
+
+- `basecode/SKILL.md` for the full review pass
+- `dead-code/SKILL.md` for removing unused or unreachable code
+- `nested-code/SKILL.md` for flattening conditionals and reducing nesting
+- `naming/SKILL.md` for improving human-readable names
+- `removing-comments/SKILL.md` for keeping only comments that explain why
+
+Apply the guidance from those files to improve readability while preserving behavior.
+```
+
+Adjust the `basecode-skills/` path if you keep this repository somewhere else in your project.
+
 ## Commands
 
 - `/basecode` — review and refactor code to apply BaseCode practices for human readability
